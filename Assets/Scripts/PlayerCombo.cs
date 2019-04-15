@@ -7,15 +7,16 @@ using UnityEngine;
 public class PlayerCombo : MonoBehaviour
 {
     private Animator anim;
-    private bool startCombo;
+    private bool startCombo, canHit, resetCombo;
+    private float comboTimer;
+    private Hit currentHit, nextHit;
     public Combo[] combos;
     public List<string> currentCombo;
-    
-    
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        canHit = true;
     }
 
     private void Update()
@@ -25,12 +26,18 @@ public class PlayerCombo : MonoBehaviour
 
     private void CheckInputs()
     {
+
+        if((Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) && !canHit)
+        {
+            resetCombo = true;
+        }
+
         for (int i = 0; i < combos.Length; i++)
         {
 
             if(combos[i].hits.Length > currentCombo.Count)
             {
-                if (Input.GetButtonDown(combos[i].hits[currentCombo.Count].inputbutton))
+                if (Input.GetButtonDown(combos[i].hits[currentCombo.Count].inputButton))
                 {
                     if (currentCombo.Count == 0)
                     {
@@ -43,7 +50,7 @@ public class PlayerCombo : MonoBehaviour
                         bool comboMatch = false;
                         for (int y = 0; y < currentCombo.Count; y++)
                         {
-                            if (currentCombo[y] != combos[i].hits[y].inputbutton)
+                            if (currentCombo[y] != combos[i].hits[y].inputButton)
                             {
                                 Debug.Log("Input não pertence ao combo atual!");
                                 comboMatch = false;
@@ -54,27 +61,54 @@ public class PlayerCombo : MonoBehaviour
                                 comboMatch = true;
                             }
                         }
-                        if (comboMatch)
+                        if (comboMatch && canHit)
                         {
                             Debug.Log("Hit adicionado ao combo!");
-                            PlayerHit(combos[i].hits[currentCombo.Count]);
+                            nextHit = combos[i].hits[currentCombo.Count];
+                            canHit = false;
                             break;
                         }
                     }
                 }
             }
         }
+
+        if (startCombo)
+        {
+            comboTimer += Time.deltaTime;
+            if (comboTimer >= currentHit.animationTime && !canHit)
+            {
+                PlayerHit(nextHit);
+                if (resetCombo)
+                {
+                    canHit = false;
+                    CancelInvoke();
+                    Invoke("ResetCombo", currentHit.animationTime);
+                }
+            }
+            if (comboTimer >= currentHit.resetTime)
+            {
+                ResetCombo();
+            }
+        }
     }
 
     private void PlayerHit(Hit hit)
     {
+        comboTimer = 0;
         anim.Play(hit.animation);
         startCombo = true;
-        currentCombo.Add(hit.inputbutton);
+        currentCombo.Add(hit.inputButton);
+        currentHit = hit;
+        canHit = true;
     }
 
-    private void Reset()
+    private void ResetCombo()
     {
         startCombo = false;
+        comboTimer = 0;
+        currentCombo.Clear();
+        anim.Rebind();
+        canHit = true;
     }
 }

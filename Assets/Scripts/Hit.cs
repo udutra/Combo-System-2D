@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Hit
 {
-    public string animation, inputbutton;
+    public string animation, inputButton;
     public float animationTime, resetTime;
     public int damage;
     public AudioClip hitSound;
