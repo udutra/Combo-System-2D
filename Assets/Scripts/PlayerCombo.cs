@@ -6,8 +6,12 @@ using UnityEngine;
 [Serializable]
 public class PlayerCombo : MonoBehaviour
 {
-    public Combo[] combos;
     private Animator anim;
+    private bool startCombo;
+    public Combo[] combos;
+    public List<string> currentCombo;
+    
+    
 
     private void Awake()
     {
@@ -23,10 +27,41 @@ public class PlayerCombo : MonoBehaviour
     {
         for (int i = 0; i < combos.Length; i++)
         {
-            if (Input.GetButtonDown(combos[i].hits[0].inputbutton))
+
+            if(combos[i].hits.Length > currentCombo.Count)
             {
-                PlayerHit(combos[i].hits[0]);
-                break;
+                if (Input.GetButtonDown(combos[i].hits[currentCombo.Count].inputbutton))
+                {
+                    if (currentCombo.Count == 0)
+                    {
+                        Debug.Log("Primeiro hit foi adicionado!");
+                        PlayerHit(combos[i].hits[currentCombo.Count]);
+                        break;
+                    }
+                    else
+                    {
+                        bool comboMatch = false;
+                        for (int y = 0; y < currentCombo.Count; y++)
+                        {
+                            if (currentCombo[y] != combos[i].hits[y].inputbutton)
+                            {
+                                Debug.Log("Input não pertence ao combo atual!");
+                                comboMatch = false;
+                                break;
+                            }
+                            else
+                            {
+                                comboMatch = true;
+                            }
+                        }
+                        if (comboMatch)
+                        {
+                            Debug.Log("Hit adicionado ao combo!");
+                            PlayerHit(combos[i].hits[currentCombo.Count]);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -34,10 +69,12 @@ public class PlayerCombo : MonoBehaviour
     private void PlayerHit(Hit hit)
     {
         anim.Play(hit.animation);
+        startCombo = true;
+        currentCombo.Add(hit.inputbutton);
     }
 
     private void Reset()
     {
-        
+        startCombo = false;
     }
 }
