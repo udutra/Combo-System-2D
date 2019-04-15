@@ -1509,6 +1509,7 @@ GameObject:
   - component: {fileID: 1014334000}
   - component: {fileID: 1014333999}
   - component: {fileID: 1014333998}
+  - component: {fileID: 1014334001}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1528,7 +1529,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb51036aecf8274393af10d29b86a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combos: []
+  combos:
+  - hits:
+    - animation: Attack 1
+      inputbutton: Fire1
+      animationTime: 0.35
+      resetTime: 0.6
+      damage: 1
+      hitSound: {fileID: 8300000, guid: 2f9513e7769a4db4d9cc1ebbfb10f3a7, type: 3}
+      slowDown: 0
+    - animation: Attack 2
+      inputbutton: Fire1
+      animationTime: 0.12
+      resetTime: 0.5
+      damage: 1
+      hitSound: {fileID: 8300000, guid: 3e00fb807ba9b8443afd7b55fda31830, type: 3}
+      slowDown: 0
+    - animation: Attack 1
+      inputbutton: Fire1
+      animationTime: 0.35
+      resetTime: 0.4
+      damage: 2
+      hitSound: {fileID: 8300000, guid: 2f9513e7769a4db4d9cc1ebbfb10f3a7, type: 3}
+      slowDown: 0
+  - hits:
+    - animation: Attack 1
+      inputbutton: Fire1
+      animationTime: 0.35
+      resetTime: 0.6
+      damage: 1
+      hitSound: {fileID: 8300000, guid: 2f9513e7769a4db4d9cc1ebbfb10f3a7, type: 3}
+      slowDown: 0
+    - animation: Attack 2
+      inputbutton: Fire1
+      animationTime: 0.12
+      resetTime: 0.5
+      damage: 1
+      hitSound: {fileID: 8300000, guid: 3e00fb807ba9b8443afd7b55fda31830, type: 3}
+      slowDown: 0
+    - animation: Attack 3
+      inputbutton: Fire2
+      animationTime: 0.35
+      resetTime: 0.5
+      damage: 3
+      hitSound: {fileID: 8300000, guid: b0179846ff5c56c49bdaa33076264e05, type: 3}
+      slowDown: 1
+  - hits:
+    - animation: Attack 2
+      inputbutton: Fire2
+      animationTime: 0.2
+      resetTime: 0.5
+      damage: 1
+      hitSound: {fileID: 8300000, guid: 3e00fb807ba9b8443afd7b55fda31830, type: 3}
+      slowDown: 0
+    - animation: Attack 3
+      inputbutton: Fire2
+      animationTime: 0.35
+      resetTime: 0.5
+      damage: 2
+      hitSound: {fileID: 8300000, guid: b0179846ff5c56c49bdaa33076264e05, type: 3}
+      slowDown: 0
 --- !u!212 &1014333999
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1592,6 +1652,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1014334001
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014333997}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 12ea02db06c10ab4b9f6237823d6bbf2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1183071976
 GameObject:
   m_ObjectHideFlags: 0
