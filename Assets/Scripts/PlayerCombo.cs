@@ -12,6 +12,7 @@ public class PlayerCombo : MonoBehaviour
     private Hit currentHit, nextHit;
     public Combo[] combos;
     public List<string> currentCombo;
+    public Attack attack;
 
     private void Awake()
     {
@@ -42,7 +43,7 @@ public class PlayerCombo : MonoBehaviour
                     if (currentCombo.Count == 0)
                     {
                         Debug.Log("Primeiro hit foi adicionado!");
-                        PlayerHit(combos[i].hits[currentCombo.Count]);
+                        PlayHit(combos[i].hits[currentCombo.Count]);
                         break;
                     }
                     else
@@ -78,7 +79,7 @@ public class PlayerCombo : MonoBehaviour
             comboTimer += Time.deltaTime;
             if (comboTimer >= currentHit.animationTime && !canHit)
             {
-                PlayerHit(nextHit);
+                PlayHit(nextHit);
                 if (resetCombo)
                 {
                     canHit = false;
@@ -93,13 +94,14 @@ public class PlayerCombo : MonoBehaviour
         }
     }
 
-    private void PlayerHit(Hit hit)
+    private void PlayHit(Hit hit)
     {
         comboTimer = 0;
         anim.Play(hit.animation);
         startCombo = true;
         currentCombo.Add(hit.inputButton);
         currentHit = hit;
+        attack.SetAttack(currentHit);
         canHit = true;
     }
 
