@@ -27,6 +27,7 @@ public class Attack : MonoBehaviour
             {
                 SlowDown.instance.SetSlowDown();
             }
+            ComboManager.instance.SetCombo();
         }
     }
 }
