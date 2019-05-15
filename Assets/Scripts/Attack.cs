@@ -7,6 +7,7 @@ public class Attack : MonoBehaviour
     private int damage;
     private bool slowDown;
     private AudioClip hitSound;
+    public AudioPlayer audioPlayer;
 
     public void SetAttack(Hit hit)
     {
@@ -21,6 +22,11 @@ public class Attack : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
+            audioPlayer.PlaySound(hitSound);
+            if (slowDown)
+            {
+                SlowDown.instance.SetSlowDown();
+            }
         }
     }
 }
