@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public class PlayerCombo : MonoBehaviour
@@ -13,6 +14,7 @@ public class PlayerCombo : MonoBehaviour
     public Combo[] combos;
     public List<string> currentCombo;
     public Attack attack;
+    public UnityEvent OnStartCombo, OnFinishCombo;
 
     private void Awake()
     {
@@ -42,6 +44,7 @@ public class PlayerCombo : MonoBehaviour
                 {
                     if (currentCombo.Count == 0)
                     {
+                        OnStartCombo.Invoke();
                         Debug.Log("Primeiro hit foi adicionado!");
                         PlayHit(combos[i].hits[currentCombo.Count]);
                         break;
@@ -107,6 +110,8 @@ public class PlayerCombo : MonoBehaviour
 
     private void ResetCombo()
     {
+        resetCombo = false;
+        OnFinishCombo.Invoke();
         startCombo = false;
         comboTimer = 0;
         currentCombo.Clear();
